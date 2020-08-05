@@ -102,7 +102,13 @@
 	  (only (srfi :39 parameters) make-parameter)
 	  (match support))
 
-  (define-syntax -> (syntax-rules ()))
+  ;; references:
+  ;;   1. "Exporting auxiliary syntax keywords": https://answers.launchpad.net/ikarus/+question/42902
+  ;;   2. "Chez Scheme: macro import at top level":
+  ;;      https://stackoverflow.com/questions/54173992/chez-scheme-macro-import-at-top-level
+  (define-syntax ->
+    (lambda (x)
+      (syntax-violation #f "misplaced auxiliary keyword" x)))
 
   (define match-equality-test
     (make-parameter
